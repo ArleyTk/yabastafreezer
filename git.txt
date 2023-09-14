@@ -1,0 +1,14 @@
+Vincular el proyecto con git
+git init
+git config user.email "dalz.sena@gmail.com"
+git config user.name "dalzlad"
+git add .
+git commit -m "Primer Commit"
+git branch -M main
+git remote add origin https://github.com/dalzlad/api_2617472.git
+git push -u origin main
+
+
+
+
+
