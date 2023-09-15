@@ -6,13 +6,24 @@ const Permiso = require('../models/usuario')
 //Método GET de la API
 const permisoGet = async(req, res = response) =>{
     //const {nombre} = req.query //Desestructuración
+    const {_id} = req.query;
+    //Consultar todos los usuarios
+    try {
+        let permisos;
 
-    //Consultar todos los permisos
-    const permisos = await Permiso.find()
+        if (_id) {
+            // Si se proporciona un id, realizar una búsqueda por nombre
+            permisos = await Permisos.find({ _id: _id });
+        } else {
+            // Si no se proporciona un id, consultar todos los clientes
+            permisos = await Permisos.find();
+        }
 
-    res.json({  //Respuesta en JSON
-        permisos
-    })   
+        res.json({ permisos });
+    } catch (error) {
+        console.error('Error al buscar clientes:', error);
+        res.status(500).json({ mensaje: 'Error interno del servidor' });
+    } 
 }
 
 //Método POST de la api
