@@ -13,10 +13,10 @@ const permisoGet = async(req, res = response) =>{
 
         if (_id) {
             // Si se proporciona un id, realizar una búsqueda por nombre
-            permisos = await Permisos.find({ _id: _id });
+            permisos = await Permiso.find({ _id: _id });
         } else {
             // Si no se proporciona un id, consultar todos los clientes
-            permisos = await Permisos.find();
+            permisos = await Permiso.find();
         }
 
         res.json({ permisos });
