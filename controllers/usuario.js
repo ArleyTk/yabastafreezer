@@ -47,11 +47,12 @@ const permisoPost = async(req, res) => {
 //Modifcación
 const permisoPut = async(req, res = response) => {
 
-    const {nombre, password, rol, estado} = req.body
+    const {_id, idrol, nombrerol, descrol, permisosrol} = req.body
     let mensaje = 'Modificación exitosa'
     try{
-         await Permiso.findOneAndUpdate({nombre: nombre}, 
-            {password: password, rol:rol, estado:estado})
+         await Permiso.updateMany({_id: _id}, {$set: {
+            idrol: idrol, nombrerol:nombrerol, descrol:descrol, permisosrol:permisosrol
+         }})
     }
     catch(error){
         mensaje = 'Se presentaron problemas en la modificación.'
