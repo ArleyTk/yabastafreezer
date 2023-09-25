@@ -35,7 +35,7 @@ const permisoPost = async(req, res) => {
         const permiso = new Permiso(body) //Instanciando el objeto
         await permiso.save() //Inserta en la colección
 
-        if(idpedido!=""){
+        if(idrol!=""){
             token = await generarJWT(idrol);
             res.cookie("token",token);
 
