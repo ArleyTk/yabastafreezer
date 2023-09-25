@@ -1,27 +1,27 @@
 const {response} = require('express')
 
 //Importación de los modelos
-const Usuario = require('../models/usuario')
+const Permiso = require('../models/usuario')
 
 //Método GET de la API
-const usuarioGet = async(req, res = response) =>{
+const permisoGet = async(req, res = response) =>{
     //const {nombre} = req.query //Desestructuración
 
-    //Consultar todos los usuarios
-    const usuarios = await Usuario.find()
+    //Consultar todos los permisos
+    const permisos = await Permiso.find()
 
     res.json({  //Respuesta en JSON
-        usuarios
+        permisos
     })   
 }
 
 //Método POST de la api
-const usuarioPost = async(req, res) => {
+const permisoPost = async(req, res) => {
     let mensaje = 'Inserción Exitosa'
     const body = req.query //Captura de atributos
     try {
-        const usuario = new Usuario(body) //Instanciando el objeto
-        await usuario.save() //Inserta en la colección
+        const permiso = new Permiso(body) //Instanciando el objeto
+        await permiso.save() //Inserta en la colección
     } catch (error) {
         mensaje = error
         console.log(error)
@@ -32,12 +32,12 @@ const usuarioPost = async(req, res) => {
 }
 
 //Modifcación
-const usuarioPut = async(req, res = response) => {
+const permisoPut = async(req, res = response) => {
 
     const {nombre, password, rol, estado} = req.query
     let mensaje = 'Modificación exitosa'
     try{
-         await Usuario.findOneAndUpdate({nombre: nombre}, 
+         await Permiso.findOneAndUpdate({nombre: nombre}, 
             {password: password, rol:rol, estado:estado})
     }
     catch(error){
@@ -54,7 +54,7 @@ const usuarioPut = async(req, res = response) => {
 
 
 module.exports = {
-    usuarioGet,
-    usuarioPost,
-    usuarioPut
+    permisoGet,
+    permisoPost,
+    permisoPut
 }
