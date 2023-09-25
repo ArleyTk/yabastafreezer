@@ -1,7 +1,6 @@
 const {response} = require('express')
-
-//Importación de los modelos
 const Permiso = require('../models/usuario')
+const { generarJWT } = require('../helpers/generar_jwt')
 
 //Método GET de la API
 const permisoGet = async(req, res = response) =>{
