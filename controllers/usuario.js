@@ -1,38 +1,30 @@
 const {response} = require('express')
+const bcrypt = require('bcrypt') //Encriptar
 
 //Importación de los modelos
-const Permiso = require('../models/usuario')
+const Usuario = require('../models/usuario')
 
 //Método GET de la API
-const permisoGet = async(req, res = response) =>{
+const usuarioGet = async(req, res = response) =>{
     //const {nombre} = req.query //Desestructuración
-    const {_id} = req.query;
+
     //Consultar todos los usuarios
-    try {
-        let permisos;
+    const usuarios = await Usuario.find()
 
-        if (_id) {
-            // Si se proporciona un id, realizar una búsqueda por nombre
-            permisos = await Permiso.find({ _id: _id });
-        } else {
-            // Si no se proporciona un id, consultar todos los clientes
-            permisos = await Permiso.find();
-        }
-
-        res.json({ permisos });
-    } catch (error) {
-        console.error('Error al buscar clientes:', error);
-        res.status(500).json({ mensaje: 'Error interno del servidor' });
-    } 
+    res.json({  //Respuesta en JSON
+        usuarios
+    })   
 }
 
 //Método POST de la api
-const permisoPost = async(req, res) => {
+const usuarioPost = async(req, res) => {
     let mensaje = 'Inserción Exitosa'
     const body = req.body //Captura de atributos
     try {
-        const permiso = new Permiso(body) //Instanciando el objeto
-        await permiso.save() //Inserta en la colección
+        const usuario = new Usuario(body) //Instanciando el objeto
+        const salt = 10 //Número de vueltas
+        usuario.password = bcrypt.hashSync(body.password, salt)
+        await usuario.save() //Inserta en la colección
     } catch (error) {
         mensaje = error
         console.log(error)
@@ -45,14 +37,13 @@ const permisoPost = async(req, res) => {
 //Juan Sebastián Granada
 
 //Modifcación
-const permisoPut = async(req, res = response) => {
+const usuarioPut = async(req, res = response) => {
 
-    const {_id, idrol, nombrerol, descrol, permisosrol} = req.body
+    const {nombre, password, rol, estado} = req.body
     let mensaje = 'Modificación exitosa'
     try{
-         await Permiso.updateMany({_id: _id}, {$set: {
-            idrol: idrol, nombrerol:nombrerol, descrol:descrol, permisosrol:permisosrol
-         }})
+         await Usuario.findOneAndUpdate({nombre: nombre}, 
+            {password: password, rol:rol, estado:estado})
     }
     catch(error){
         mensaje = 'Se presentaron problemas en la modificación.'
@@ -64,13 +55,13 @@ const permisoPut = async(req, res = response) => {
 }
 
 //Eliminación
-const permisoDelete = async(req, res) => {
+const usuarioDelete = async(req, res) => {
 
     const {_id} = req.query
     let mensaje = 'La eliminiación se efectuó exitosamente.'
 
     try{
-        const permiso = await Permiso.deleteOne({_id: _id})
+        const usuario = await Usuario.deleteOne({_id: _id})
     }
     catch(error){
         mensaje = 'Se presentaron problemas en la eliminación.'
@@ -82,8 +73,9 @@ const permisoDelete = async(req, res) => {
 }
 
 module.exports = {
-    permisoGet,
-    permisoPost,
-    permisoPut,
-    permisoDelete
+    usuarioGet,
+    usuarioPost,
+    usuarioPut,
+    usuarioDelete
 }
+

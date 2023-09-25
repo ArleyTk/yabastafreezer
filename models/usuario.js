@@ -1,32 +1,32 @@
 const {Schema, model} = require('mongoose')
 
-const PermisoSchema = Schema({
-    idrol: {
-        type: Number,
+const UsuarioSchema = Schema({
+    nombre: {
+        type: String,
         unique: true,
         required: [true, 'El nombre es obligatorio']
     },
 
-    nombrerol: {
+    password: {
         type: String,
-        required: [true, 'el nombre es obligatorio'],
+        required: [true, 'La contraseña es obligatorio'],
         minlength: [3, 'Debe tener mínimo 3 caracteres']
         //maxlength:  [7, 'Debe tener máximo 3 caracteres']
     },
 
-    descrol: {
+    rol: {
         type: String,
         required: true,
+        enum: ['Admin', 'Usuario']
     },
 
-    permisosrol: {
-        type: String,
-        required: [true, 'el nombre es obligatorio'],
-        minlength: [3, 'Debe tener mínimo 3 caracteres']
-        //maxlength:  [7, 'Debe tener máximo 3 caracteres']
+    estado: {
+        type: Boolean,
+        default: true,
+        required: [true, 'El estado es obligatorio']
     }
 })
 
-//Exportar la función PermisoSchema
-module.exports = model('Permiso',PermisoSchema)
+//Exportar la función UsuarioSchema
+module.exports = model('Usuario',UsuarioSchema)
 

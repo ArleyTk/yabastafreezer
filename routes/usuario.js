@@ -4,14 +4,15 @@ const {Router} = require('express')
 const route = Router() 
 
 //Importar métodos del controlador
-const {permisoGet, permisoPost, permisoPut, permisoDelete} = require('../controllers/usuario')
+const {usuarioGet, usuarioPost, usuarioPut, usuarioDelete} = require('../controllers/usuario')
+const  {isAuthenticated}  = require('../controllers/auth')
 
-route.get('/', permisoGet) //Listar Datos
+route.get('/', isAuthenticated, usuarioGet) //Listar Datos
 
-route.post('/', permisoPost) //Insertar Datos
+route.post('/', usuarioPost) //Insertar Datos
 
-route.put('/', permisoPut) //Modificar Datos
+route.put('/', usuarioPut) //Modificar Datos
 
-route.delete('/', permisoDelete) //Eliminar Datos
+route.delete('/', usuarioDelete) //Eliminar Datos
 
 module.exports = route

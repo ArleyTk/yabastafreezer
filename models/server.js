@@ -9,7 +9,8 @@ class Server{
     constructor(){
         this.app = express()
         this.port = process.env.PORT //Capturando variable puerto
-        this.permisoPath = '/api/usuario' //Ruta pública
+        this.usuarioPath = '/api/usuario' //Ruta pública
+        this.authPath = '/api/auth'
         this.middlewares()
         this.conectarDB()
         this.routes()
@@ -29,18 +30,13 @@ class Server{
     }
 
     routes(){
-        this.app.use(this.permisoPath, require('../routes/usuario'))
+        this.app.use(this.usuarioPath, require('../routes/usuario'))
+        this.app.use(this.authPath, require('../routes/auth'))
     }
     
 
-    
     async conectarDB(){
         await dbConnection() //Esperar la respuesta del servidor        
-    }
-    catch (e) {
-        console.log("Error = ")
-        console.log({name:e.name,
-        message:e.message});
     }
 }
 
