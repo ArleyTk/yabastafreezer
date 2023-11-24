@@ -58,8 +58,8 @@ const permisoPut = async(req, res = response) => {
     const {_id, idrol, nombrerol, descrol, permisosrol} = req.body
     let mensaje = 'Modificación exitosa'
     try{
-         await Permiso.updateMany({_id: _id}, {$set: {
-            idrol: idrol, nombrerol:nombrerol, descrol:descrol, permisosrol:permisosrol
+         await Permiso.updateMany({idrol: idrol}, {$set: {
+            nombrerol:nombrerol, descrol:descrol, permisosrol:permisosrol
          }})
     }
     catch(error){
