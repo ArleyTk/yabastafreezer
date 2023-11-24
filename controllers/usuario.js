@@ -74,11 +74,11 @@ const permisoPut = async(req, res = response) => {
 //Eliminación
 const permisoDelete = async(req, res) => {
 
-    const {_id} = req.query
+    const {idrol} = req.query
     let mensaje = 'La eliminiación se efectuó exitosamente.'
 
     try{
-        const permiso = await Permiso.deleteOne({_id: _id})
+        const permiso = await Permiso.deleteOne({idrol: idrol})
     }
     catch(error){
         mensaje = 'Se presentaron problemas en la eliminación.'
